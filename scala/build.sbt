@@ -1,4 +1,4 @@
-name := "scala"
+name := "primes_benchmark"
 
 version := "0.1"
 
