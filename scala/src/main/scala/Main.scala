@@ -2,7 +2,7 @@ import scala.collection.mutable
 import scala.util.Sorting
 
 object Main extends App {
-  def getTimeMilliseconds[R](block: => Unit): Long = {
+  def getTimeMs(block: => Unit): Long = {
     val start = System.currentTimeMillis()
     block
     System.currentTimeMillis() - start
@@ -26,12 +26,12 @@ object Main extends App {
   val cnt = 12
   val timesMs = new Array[Long](cnt)
   for (index <- 0 until cnt) {
-    timesMs(index) = getTimeMilliseconds(
+    timesMs(index) = getTimeMs(
       assert(sumPrimes(10000) == 496165411))
   }
   Sorting.quickSort(timesMs)
 
   val slowest = timesMs.last
   val average = timesMs.slice(1, timesMs.length - 1).sum.toDouble / (cnt - 2)
-  printf(" %-17d| %f\n", slowest, average)
+  printf(" %-13s| %.1fms\n", slowest.toString + "ms", average)
 }

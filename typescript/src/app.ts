@@ -1,4 +1,4 @@
-function sum_primes(n: number): number {
+function sumPrimes(n: number): number {
     let primes: number[] = []
     let current: number = 2
     let sum: number = 0
@@ -14,27 +14,26 @@ function sum_primes(n: number): number {
     return sum
 }
 
-function get_time_ms(block: () => void): number {
+function getTimeMs(block: () => void): number {
     let start = new Date().getTime()
     block()
     return new Date().getTime() - start
 }
 
 function padSlowest(n: number): string {
-    const padLength = 17
-    const padString = "                "
-    return (String(n) + padString).slice(0, padLength)
+    const padString = "ms           "
+    return (String(n) + padString).slice(0, padString.length)
 }
 
 const cnt = 12
-let times_ms = Array(cnt)
+let timesMs = Array(cnt)
 for (let index = 0; index < cnt; ++index) {
-    times_ms[index] = get_time_ms(() =>
-        console.assert(sum_primes(10000) == 496165411))
+    timesMs[index] = getTimeMs(() =>
+        console.assert(sumPrimes(10000) == 496165411))
 }
-times_ms.sort()
+timesMs.sort()
 
-let slowest_ms = times_ms[times_ms.length - 1]
-let average_ms = times_ms.slice(1, -1)
+let slowestMs = timesMs[timesMs.length - 1]
+let averageMs = timesMs.slice(1, -1)
     .reduce((a, b) => a + b) / (cnt - 2)
-console.log(` ${padSlowest(slowest_ms)}| ${average_ms}`)
+console.log(` ${padSlowest(slowestMs)}| ${averageMs}ms`)

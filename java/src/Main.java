@@ -18,7 +18,7 @@ public class Main {
         return sum;
     }
 
-    private static long getTimeMilliseconds(Runnable block) {
+    private static long getTimeMs(Runnable block) {
         long start = new Date().getTime();
         block.run();
         return new Date().getTime() - start;
@@ -26,21 +26,21 @@ public class Main {
 
     public static void main(String[] args) {
         final int cnt = 12;
-        long[] times = new long[cnt];
+        long[] timesMs = new long[cnt];
         for (int index = 0; index < 12; ++index) {
-            times[index] = getTimeMilliseconds(() -> {
+            timesMs[index] = getTimeMs(() -> {
                 if (sumPrimes(10000) != 496165411) {
                     throw new AssertionError();
                 }
             });
         }
-        Arrays.sort(times);
+        Arrays.sort(timesMs);
 
-        long slowest = times[times.length - 1];
-        double average = (double)Arrays.stream(times)
+        long slowest = timesMs[timesMs.length - 1];
+        double average = (double)Arrays.stream(timesMs)
                 .skip(1)
                 .limit(cnt - 2)
                 .sum() / (cnt - 2);
-        System.out.printf(" %-17d| %f\n", slowest, average);
+        System.out.printf(" %-13s| %.1fms\n", Long.toString(slowest) + "ms", average);
     }
 }

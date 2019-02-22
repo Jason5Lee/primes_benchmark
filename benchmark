@@ -61,8 +61,8 @@ fi
 
 echo "Compilation completed."
 echo
-echo -e "Language   | Slowest time(ms) | Average time(ms)"
-echo -e "------------------------------------------------"
+echo "Language   | Slowest time | Average time"
+echo "----------------------------------------"
 if [ $TYPESCRIPT ] ; then
     echo -n -e "TypeScript |"
     node typescript/app.js
@@ -83,4 +83,4 @@ if [ $JAVA ] ; then
     java Main
     cd ../..
 fi
-echo -e "------------------------------------------------"
+echo "----------------------------------------"

@@ -1,4 +1,4 @@
-use std::time::Instant;
+use std::time::{Instant, Duration};
 
 fn sum_primes(n: usize) -> u64 {
     let mut primes = Vec::new();
@@ -15,16 +15,15 @@ fn sum_primes(n: usize) -> u64 {
     sum
 }
 
-fn get_time_ms(block: impl Fn()) -> u64 {
+fn get_duration(block: impl Fn()) -> Duration {
     let start = Instant::now();
     block();
-    let elapsed = Instant::now() - start;
-    (elapsed.as_secs() * 1_000) + (elapsed.subsec_nanos() / 1_000_000) as u64
+    Instant::now() - start
 }
 
-fn pad_slowest(slowest_ms: u64) -> String {
-    let mut s = slowest_ms.to_string();
-    while s.len() < 17 {
+fn pad_slowest(slowest: Duration) -> String {
+    let mut s = format!("{:?}", slowest);
+    while s.len() < 13 {
         s.push(' ')
     }
     s
@@ -32,15 +31,16 @@ fn pad_slowest(slowest_ms: u64) -> String {
 
 fn main() {
     const CNT: usize = 12;
-    let mut times_ms = [0u64; CNT];
-    for index in 0..CNT {
-        times_ms[index] = get_time_ms(||
-            assert!(sum_primes(10000) == 496165411));
+    let mut times: Vec<Duration> = Vec::new();
+    times.reserve(CNT);
+    for _ in 0..CNT {
+        times.push(get_duration(||
+            assert!(sum_primes(10000) == 496165411)))
     }
-    times_ms.sort();
+    times.sort();
 
-    let slowest_ms = *times_ms.last().unwrap();
-    let average_ms = (&times_ms[1..times_ms.len() - 1]).iter()
-        .sum::<u64>() as f64 / (CNT - 2) as f64;
-    println!(" {}| {}", pad_slowest(slowest_ms), average_ms);
+    let slowest = *times.last().unwrap();
+    let average = (&times[1..times.len() - 1]).iter()
+        .sum::<Duration>() / (CNT - 2) as u32;
+    println!(" {}| {:?}", pad_slowest(slowest), average);
 }
