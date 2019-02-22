@@ -56,4 +56,4 @@ Scala      | 1135             | 787.900000
 Java       | 1768             | 1586.800000
 ```
 
-It suprises me that TypeScript, the only dynamic language, is the fastest one, even faster than Rust. It is also out of my expectation that Scala is faster than Java.
+It suprises me that TypeScript, the only dynamic language after compilation, is the fastest one, even faster than Rust. It is also out of my expectation that Scala is faster than Java.
