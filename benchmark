@@ -1,0 +1,84 @@
+#!/bin/bash
+set -e
+
+for arg in "$@"
+do
+    case $arg in
+        --typescript)
+            TYPESCRIPT=true
+            ;;
+        --rust)
+            RUST=true
+            ;;
+        --scala)
+            SCALA=true
+            ;;
+        --java)
+            JAVA=true
+            ;;
+        --all)
+            TYPESCRIPT=true
+            RUST=true
+            SCALA=true
+            JAVA=true
+            ;;
+        *)
+            echo "Unknown argument: $arg"
+            exit 1
+            ;;
+    esac
+done
+
+if [ $TYPESCRIPT ] ; then
+    echo "Compiling TypeScript..."
+    cd typescript
+    npm install
+    tsc
+    cd ..
+fi
+
+if [ $RUST ] ; then
+    echo "Compiling Rust..."
+    cd rust
+    cargo build --release
+    cd ..
+fi
+
+if [ $SCALA ] ; then
+    echo "Compiling Scala..."
+    cd scala
+    sbt compile
+    cd ..
+fi
+
+if [ $JAVA ] ; then
+    echo "Compiling Java"
+    cd java
+    rm -rf out && mkdir out
+    javac src/Main.java -d out
+    cd ..
+fi
+
+echo "Compilation completed."
+echo
+echo -e "Language\tSlowest time(ms)\tAverage time(ms)"
+if [ $TYPESCRIPT ] ; then
+    echo -n -e "TypeScript\t"
+    node typescript/app.js
+fi
+if [ $RUST ] ; then
+    echo -n -e "Rust\t"
+    rust/target/release/primes_benchmark
+fi
+if [ $SCALA ] ; then
+    echo -n -e "Scala\t"
+    cd scala/target/scala-2.12/classes
+    java -classpath $HOME/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.12.8.jar:. Main
+    cd ../../../..
+fi
+if [ $JAVA ] ; then
+    echo -n -e "Java\t"
+    cd java/out
+    java Main
+    cd ../..
+fi
