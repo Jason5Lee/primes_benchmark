@@ -11,26 +11,25 @@ Comparing the performance of programming languages by computing sum of the first
 
 ## Run Benchmark
 
-Run benchmark by running script `./benchmark`.
+Run `./benchmark` with the arguments that specify the benchmark languages to start. All languages, their requirements and their corresponding arguments are listed below.
 
-### Parameter
+| language   | requirement                | argument       |
+| ---------- | -------------------------- | -------------- |
+| TypeScript | npm 6.5.0, tsc 3.0.1.      | `--typescript` |
+| Rust       | cargo 1.32.0, rustc 1.32.0 | `--rust`       |
+| Java       | JDK8                       | `--java`       |
+| Scala      | JDK8, sbt 1.2.8            | `--scala`      |
 
-* `--typescript` includes TypeScript.
-* `--rust` includes Rust.
-* `--scala` includes Scala.
-* `--java` includes Java.
-* `--all` includes all languages above.
+You can also use `--all` argument to benchmark all languages.
 
 ## Benchmark stratege
 
-### Benchmark Speicification
-
 The benchmark programs will implement a function that caculating the sum of the first 10000 primes. It will use the following algorithm.
 
-1. Use a array-based dynamic-length list `primes` to stored the primes. It is initialized to empty.
+1. Use a array-based dynamic-length list `primes` to stored the primes. It is initialized to an empty list.
 2. Use a variable `prime` for the current prime, initialized to `2`.
 3. Use a variable `sum` for the sum of the primes, initialized to `0`.
-4. If for all `p` in `primes`, `prime % p != 0`, goto `5`, else goto `8`.
+4. If for all `p` in `primes`, `prime % p != 0`, goto 5, else goto 8.
 5. Add `prime` into `primes`.
 6. Update `sum` with `sum + prime`.
 7. If the length of `primes` equals `10000`, return `sum`.
@@ -39,9 +38,9 @@ The benchmark programs will implement a function that caculating the sum of the 
 
 The implementation of the algorithm above is basically imperative. But for step 4, the predication is implemented in a functional declarative expression intentionally, e.g. `Array.every` method of TypeScript.
 
-### Time computation
+### Result Analysis
 
-The rest of the program are about measuring the time. The programming will execute the function for 12 times, checking whether the result is right, and collecting the time each execution spends. There're two indicators: slowest time and average time. Slowest time is the time it spends at the slowest execution. Average time is the average of the time except the slowest and fastest execution.
+The rest of the program are about measuring the times and analyze them. The programming will execute the function for 12 times, checking whether the result is correct, and collecting the times each execution spends. There're two indicators: slowest time and average time. Note that the average time is the average except the slowest and fastest execution.
 
 ## Suprising Result
 
