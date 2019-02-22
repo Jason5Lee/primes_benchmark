@@ -20,8 +20,13 @@ function get_time_ms(block: () => void): number {
     return new Date().getTime() - start
 }
 
-const cnt = 12
+function padSlowest(n: number): string {
+    const padLength = 17
+    const padString = "                "
+    return (String(n) + padString).slice(0, padLength)
+}
 
+const cnt = 12
 let times_ms = Array(cnt)
 for (let index = 0; index < cnt; ++index) {
     times_ms[index] = get_time_ms(() =>
@@ -32,4 +37,4 @@ times_ms.sort()
 let slowest_ms = times_ms[times_ms.length - 1]
 let average_ms = times_ms.slice(1, -1)
     .reduce((a, b) => a + b) / (cnt - 2)
-console.log(`${slowest_ms}\t${average_ms}`)
+console.log(` ${padSlowest(slowest_ms)}| ${average_ms}`)

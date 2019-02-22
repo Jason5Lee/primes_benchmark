@@ -61,24 +61,26 @@ fi
 
 echo "Compilation completed."
 echo
-echo -e "Language\tSlowest time(ms)\tAverage time(ms)"
+echo -e "Language   | Slowest time(ms) | Average time(ms)"
+echo -e "------------------------------------------------"
 if [ $TYPESCRIPT ] ; then
-    echo -n -e "TypeScript\t"
+    echo -n -e "TypeScript |"
     node typescript/app.js
 fi
 if [ $RUST ] ; then
-    echo -n -e "Rust\t"
+    echo -n -e "Rust       |"
     rust/target/release/primes_benchmark
 fi
 if [ $SCALA ] ; then
-    echo -n -e "Scala\t"
+    echo -n -e "Scala      |"
     cd scala/target/scala-2.12/classes
     java -classpath $HOME/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.12.8.jar:. Main
     cd ../../../..
 fi
 if [ $JAVA ] ; then
-    echo -n -e "Java\t"
+    echo -n -e "Java       |"
     cd java/out
     java Main
     cd ../..
 fi
+echo -e "------------------------------------------------"

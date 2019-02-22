@@ -37,10 +37,10 @@ public class Main {
         Arrays.sort(times);
 
         long slowest = times[times.length - 1];
-        long average = Arrays.stream(times)
+        double average = (double)Arrays.stream(times)
                 .skip(1)
                 .limit(cnt - 2)
                 .sum() / (cnt - 2);
-        System.out.printf("%d\t%d\n", slowest, average);
+        System.out.printf(" %-17d| %f\n", slowest, average);
     }
 }

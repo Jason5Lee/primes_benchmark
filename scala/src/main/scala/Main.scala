@@ -32,6 +32,6 @@ object Main extends App {
   Sorting.quickSort(timesMs)
 
   val slowest = timesMs.last
-  val average = timesMs.slice(1, timesMs.length - 1).sum / (cnt - 2)
-  println(s"$slowest\t$average")
+  val average = timesMs.slice(1, timesMs.length - 1).sum.toDouble / (cnt - 2)
+  printf(" %-17d| %f\n", slowest, average)
 }

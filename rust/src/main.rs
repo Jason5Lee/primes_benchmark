@@ -22,6 +22,14 @@ fn get_time_ms(block: impl Fn()) -> u64 {
     (elapsed.as_secs() * 1_000) + (elapsed.subsec_nanos() / 1_000_000) as u64
 }
 
+fn pad_slowest(slowest_ms: u64) -> String {
+    let mut s = slowest_ms.to_string();
+    while s.len() < 17 {
+        s.push(' ')
+    }
+    s
+}
+
 fn main() {
     const CNT: usize = 12;
     let mut times_ms = [0u64; CNT];
@@ -31,8 +39,8 @@ fn main() {
     }
     times_ms.sort();
 
-    let slowest_ms = times_ms.last().unwrap();
+    let slowest_ms = *times_ms.last().unwrap();
     let average_ms = (&times_ms[1..times_ms.len() - 1]).iter()
         .sum::<u64>() as f64 / (CNT - 2) as f64;
-    println!("{}\t{}", slowest_ms, average_ms);
+    println!(" {}| {}", pad_slowest(slowest_ms), average_ms);
 }
