@@ -2,14 +2,7 @@
 
 Comparing the performance of programming languages by computing sum of the first 10000 primes.
 
-## Depedencies
-
-* **TypeScript** `npm` 6.5.0, `tsc` 3.0.1.
-* **Rust** `cargo` 1.32.0, `rustc` 1.32.0.
-* **Java** JDK 8.
-* **Scala** `sbt` 1.2.8.
-
-## Run Benchmark
+## Benchmark
 
 Run `./benchmark` with the arguments that specify the benchmark languages to start. All languages, their requirements and their corresponding arguments are listed below.
 
@@ -22,7 +15,7 @@ Run `./benchmark` with the arguments that specify the benchmark languages to sta
 
 You can also use `--all` argument to benchmark all languages.
 
-## Benchmark stratege
+## Stratege
 
 The benchmark programs will implement a function that caculating the sum of the first 10000 primes. It will use the following algorithm.
 
