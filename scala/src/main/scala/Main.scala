@@ -8,7 +8,7 @@ object Main extends App {
     System.currentTimeMillis() - start
   }
 
-  def sumPrimes(n: Int): Long = {
+  def sumPrimesLong(n: Int): Long = {
     val primes = mutable.ArrayBuffer[Long]()
     var current: Long = 2
     var sum: Long = 0
@@ -22,6 +22,29 @@ object Main extends App {
     }
     sum
   }
+
+  def sumPrimesInt(n: Int): Int = {
+    val primes = mutable.ArrayBuffer[Int]()
+    var current: Int = 2
+    var sum: Int = 0
+
+    while (primes.length < n) {
+      if (primes.forall(current % _ != 0)) {
+        sum += current
+        primes += current
+      }
+      current += 1
+    }
+    sum
+  }
+
+  if (args.length != 1) {
+    throw new IllegalArgumentException("Expect 1 argument.")
+  }
+
+  val sumPrimes: Int => Long = if (args(0) == "--uint64") sumPrimesLong
+  else if (args(0) == "--uint32") sumPrimesInt
+  else throw new IllegalArgumentException("Unknown arguments: " + args(0) + ".")
 
   val cnt = 12
   val timesMs = new Array[Long](cnt)

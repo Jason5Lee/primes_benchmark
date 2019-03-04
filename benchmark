@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+BIT_FLAG=--uint64
 for arg in "$@"
 do
     case $arg in
@@ -21,6 +22,12 @@ do
             RUST=true
             SCALA=true
             JAVA=true
+            ;;
+        --uint64)
+            BIT_FLAG=--uint64
+            ;;
+        --uint32)
+            BIT_FLAG=--uint32
             ;;
         *)
             echo "Unknown argument: $arg"
@@ -69,18 +76,18 @@ if [ $TYPESCRIPT ] ; then
 fi
 if [ $RUST ] ; then
     echo -n -e "Rust       |"
-    rust/target/release/primes_benchmark
+    rust/target/release/primes_benchmark $BIT_FLAG
 fi
 if [ $SCALA ] ; then
     echo -n -e "Scala      |"
     cd scala/target/scala-2.12/classes
-    java -classpath $HOME/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.12.8.jar:. Main
+    java -classpath $HOME/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.12.8.jar:. Main $BIT_FLAG
     cd ../../../..
 fi
 if [ $JAVA ] ; then
     echo -n -e "Java       |"
     cd java/out
-    java Main
+    java Main $BIT_FLAG
     cd ../..
 fi
 echo "----------------------------------------"

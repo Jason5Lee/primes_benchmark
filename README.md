@@ -10,10 +10,12 @@ Run `./benchmark` with the arguments that specify the benchmark languages to sta
 | ---------- | -------------------------- | -------------- |
 | TypeScript | npm 6.5.0, tsc 3.0.1.      | `--typescript` |
 | Rust       | cargo 1.32.0, rustc 1.32.0 | `--rust`       |
-| Java       | JDK8                       | `--java`       |
-| Scala      | JDK8, sbt 1.2.8            | `--scala`      |
+| Java       | JDK8+                      | `--java`       |
+| Scala      | JDK8+, sbt 1.2.8           | `--scala`      |
 
 You can also use `--all` argument to benchmark all languages.
+
+The program uses unsigned 64-bit integer as the default. You can add `--uint32` flag to use unsigned 32-bit integer.
 
 ## Stratege
 
@@ -48,4 +50,6 @@ Scala      | 1135             | 787.900000
 Java       | 1768             | 1586.800000
 ```
 
-It suprises me that TypeScript, the only dynamic language after compilation, is the fastest one, even faster than Rust. It is also out of my expectation that Scala is faster than Java.
+It suprises me that TypeScript, the only dynamic language after compilation, is the fastest one, even faster than Rust.
+
+**Update:** According to the answers on [stackoverflow](https://stackoverflow.com/questions/54828815/why-is-typescript-on-nodejs-faster-than-rust-in-computing-the-sum-of-the-primes), [zhihu](https://www.zhihu.com/question/313287251), and the issues, this is because that Node uses 32-bit integer, and it can be "fixed" by making every programs using 32-bit integer. But I think if this is the reason why Node is fast, Node deserves it. Node can perform number type optimization while others cannot. Still, I add an optional flag allowing to run the benchmark with 32-bit integer, and in that case, Rust is the fastest as the expectation.
