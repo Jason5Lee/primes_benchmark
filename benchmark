@@ -5,8 +5,8 @@ BIT_FLAG=--uint64
 for arg in "$@"
 do
     case $arg in
-        --typescript)
-            TYPESCRIPT=true
+        --javascript)
+            JAVASCRIPT=true
             ;;
         --rust)
             RUST=true
@@ -18,7 +18,7 @@ do
             JAVA=true
             ;;
         --all)
-            TYPESCRIPT=true
+            JAVASCRIPT=true
             RUST=true
             SCALA=true
             JAVA=true
@@ -35,14 +35,6 @@ do
             ;;
     esac
 done
-
-if [ $TYPESCRIPT ] ; then
-    echo "Compiling TypeScript..."
-    cd typescript
-    npm install
-    tsc
-    cd ..
-fi
 
 if [ $RUST ] ; then
     echo "Compiling Rust..."
@@ -70,9 +62,9 @@ echo "Compilation completed."
 echo
 echo "Language   | Slowest time | Average time"
 echo "----------------------------------------"
-if [ $TYPESCRIPT ] ; then
-    echo -n -e "TypeScript |"
-    node typescript/app.js
+if [ $JAVASCRIPT ] ; then
+    echo -n -e "JavaScript |"
+    node javascript/app.js
 fi
 if [ $RUST ] ; then
     echo -n -e "Rust       |"
