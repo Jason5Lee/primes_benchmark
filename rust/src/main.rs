@@ -36,8 +36,8 @@ fn get_duration(block: impl Fn()) -> Duration {
     Instant::now() - start
 }
 
-fn pad_slowest(slowest: Duration) -> String {
-    let mut s = format!("{:?}", slowest);
+fn pad_duration(duration: Duration) -> String {
+    let mut s = format!("{:?}", duration);
     while s.len() < 13 {
         s.push(' ')
     }
@@ -80,5 +80,5 @@ fn main() {
     let slowest = *times.last().unwrap();
     let average = (&times[1..times.len() - 1]).iter()
         .sum::<Duration>() / (CNT - 2) as u32;
-    println!(" {}| {:?}", pad_slowest(slowest), average);
+    println!(" {}| {}|", pad_duration(slowest), pad_duration(average));
 }

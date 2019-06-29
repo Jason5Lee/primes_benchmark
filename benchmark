@@ -60,26 +60,25 @@ fi
 
 echo "Compilation completed."
 echo
-echo "Language   | Slowest time | Average time"
-echo "----------------------------------------"
+echo "| Language   | Slowest time | Average time |"
+echo "| ---------- | ------------ | ------------ |"
 if [ $JAVASCRIPT ] ; then
-    echo -n -e "JavaScript |"
+    echo -n -e "| JavaScript |"
     node javascript/app.js
 fi
 if [ $RUST ] ; then
-    echo -n -e "Rust       |"
+    echo -n -e "| Rust       |"
     rust/target/release/primes_benchmark $BIT_FLAG
 fi
 if [ $SCALA ] ; then
-    echo -n -e "Scala      |"
+    echo -n -e "| Scala      |"
     cd scala/target/scala-2.12/classes
     java -classpath $HOME/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.12.8.jar:. Main $BIT_FLAG
     cd ../../../..
 fi
 if [ $JAVA ] ; then
-    echo -n -e "Java       |"
+    echo -n -e "| Java       |"
     cd java/out
     java Main $BIT_FLAG
     cd ../..
 fi
-echo "----------------------------------------"

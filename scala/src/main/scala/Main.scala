@@ -56,5 +56,5 @@ object Main extends App {
 
   val slowest = timesMs.last
   val average = timesMs.slice(1, timesMs.length - 1).sum.toDouble / (cnt - 2)
-  printf(" %-13s| %.1fms\n", slowest.toString + "ms", average)
+  printf(" %-13s| %-13s|\n", slowest.toString + "ms", average.toString + "ms")
 }

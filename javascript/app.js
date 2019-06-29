@@ -17,7 +17,7 @@ function getTimeMs(block) {
     block();
     return new Date().getTime() - start;
 }
-function padSlowest(n) {
+function padTime(n) {
     const padString = "ms           ";
     return (String(n) + padString).slice(0, padString.length);
 }
@@ -30,5 +30,5 @@ timesMs.sort();
 let slowestMs = timesMs[timesMs.length - 1];
 let averageMs = timesMs.slice(1, -1)
     .reduce((a, b) => a + b) / (cnt - 2);
-console.log(` ${padSlowest(slowestMs)}| ${averageMs}ms`);
+console.log(` ${padTime(slowestMs)}| ${padTime(averageMs)}|`);
 //# sourceMappingURL=app.js.map

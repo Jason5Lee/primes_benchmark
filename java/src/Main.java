@@ -72,6 +72,6 @@ public class Main {
                 .skip(1)
                 .limit(cnt - 2)
                 .sum() / (cnt - 2);
-        System.out.printf(" %-13s| %.1fms\n", Long.toString(slowest) + "ms", average);
+        System.out.printf(" %-13s| %-13s|\n", Long.toString(slowest) + "ms", Double.toString(average) + "ms");
     }
 }
