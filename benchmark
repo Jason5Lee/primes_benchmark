@@ -17,11 +17,15 @@ do
         --java)
             JAVA=true
             ;;
+        --clj)
+            CLJ=true
+            ;;
         --all)
             JAVASCRIPT=true
             RUST=true
             SCALA=true
             JAVA=true
+            CLJ=true
             ;;
         --uint64)
             BIT_FLAG=--uint64
@@ -81,4 +85,10 @@ if [ $JAVA ] ; then
     cd java/out
     java Main $BIT_FLAG
     cd ../..
+fi
+if [ $CLJ ] ; then
+    echo -n -e "| Clojure    |"
+    cd clojure
+    clojure -m core
+    cd ..
 fi

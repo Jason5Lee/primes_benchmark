@@ -12,6 +12,7 @@ Run `./benchmark` with the arguments that specify the benchmark languages to sta
 | Rust       | cargo       | `--rust`       |
 | Java       | JDK8+       | `--java`       |
 | Scala      | sbt         | `--scala`      |
+| Clojure    | Deps CLI    | `--clj`        |
 
 You can also use `--all` argument to benchmark all languages.
 
