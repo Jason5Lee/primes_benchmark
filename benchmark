@@ -20,12 +20,16 @@ do
         --csharp)
             CSHARP=true
             ;;
+        --kotlin)
+            KOTLIN=true
+            ;;
         --all)
             JAVASCRIPT=true
             RUST=true
             SCALA=true
             JAVA=true
             CSHARP=true
+            KOTLIN=true
             ;;
         --uint64)
             BIT_FLAG=--uint64
@@ -77,23 +81,32 @@ if [ $JAVASCRIPT ] ; then
     echo -n -e "| JavaScript |"
     node javascript/app.js
 fi
+
 if [ $RUST ] ; then
     echo -n -e "| Rust       |"
     rust/target/release/primes_benchmark $BIT_FLAG
 fi
+
 if [ $SCALA ] ; then
     echo -n -e "| Scala      |"
     cd scala/target/scala-2.12/classes
     java -classpath $HOME/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.12.8.jar:. Main $BIT_FLAG
     cd ../../../..
 fi
+
 if [ $JAVA ] ; then
     echo -n -e "| Java       |"
     cd java/out
     java Main $BIT_FLAG
     cd ../..
 fi
+
 if [ $CSHARP ] ; then
     echo -n -e "| C#         |"
     dotnet csharp/primes_benchmark/bin/Release/netcoreapp2.2/primes_benchmark.dll $BIT_FLAG
+fi
+
+if [ $KOTLIN ] ; then
+    echo -n -e "| Kotlin     |"
+    kotlinc -script kotlin/primesBenchmark.kts -- $BIT_FLAG
 fi
