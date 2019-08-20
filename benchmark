@@ -17,15 +17,15 @@ do
         --java)
             JAVA=true
             ;;
-        --clj)
-            CLJ=true
+        --csharp)
+            CSHARP=true
             ;;
         --all)
             JAVASCRIPT=true
             RUST=true
             SCALA=true
             JAVA=true
-            CLJ=true
+            CSHARP=true
             ;;
         --uint64)
             BIT_FLAG=--uint64
@@ -62,6 +62,13 @@ if [ $JAVA ] ; then
     cd ..
 fi
 
+if [ $CSHARP ] ; then
+    echo "Compiling C#"
+    cd csharp
+    dotnet build -c release
+    cd ..
+fi
+
 echo "Compilation completed."
 echo
 echo "| Language   | Slowest time | Average time |"
@@ -86,9 +93,7 @@ if [ $JAVA ] ; then
     java Main $BIT_FLAG
     cd ../..
 fi
-if [ $CLJ ] ; then
-    echo -n -e "| Clojure    |"
-    cd clojure
-    clojure -m core
-    cd ..
+if [ $CSHARP ] ; then
+    echo -n -e "| C#         |"
+    dotnet csharp/primes_benchmark/bin/Release/netcoreapp2.2/primes_benchmark.dll $BIT_FLAG
 fi

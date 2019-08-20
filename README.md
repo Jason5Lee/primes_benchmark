@@ -6,13 +6,13 @@ Comparing the performance of programming languages by computing sum of the first
 
 Run `./benchmark` with the arguments that specify the benchmark languages to start. All languages, requirements and corresponding arguments are listed below.
 
-| Language   | Requirement | Argument       |
-| ---------- | ----------- | -------------- |
-| JavaScript | node        | `--javascript` |
-| Rust       | cargo       | `--rust`       |
-| Java       | JDK8+       | `--java`       |
-| Scala      | sbt         | `--scala`      |
-| Clojure    | Deps CLI    | `--clj`        |
+| Language   | Requirement   | Argument       |
+| ---------- | ------------- | -------------- |
+| JavaScript | node          | `--javascript` |
+| Rust       | cargo         | `--rust`       |
+| Java       | JDK8+         | `--java`       |
+| Scala      | sbt           | `--scala`      |
+| C#         | .NET Core 2.2 | `--csharp`     |
 
 You can also use `--all` argument to benchmark all languages.
 
