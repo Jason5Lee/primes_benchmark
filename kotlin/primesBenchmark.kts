@@ -71,4 +71,4 @@ for (i in 1..cnt) {
 timesMs.sort()
 val slowest = timesMs.last()
 val average = timesMs.subList(1, timesMs.size-1).sum().toDouble() / (cnt - 2)
-println(" %-13s| %-13s|\n".format(slowest.toString() + "ms", average.toString() + "ms"))
+println(" %-13s| %-13s|".format(slowest.toString() + "ms", average.toString() + "ms"))
