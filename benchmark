@@ -23,6 +23,9 @@ do
         --kotlin)
             KOTLIN=true
             ;;
+        --fsharp)
+            FSHARP=true
+            ;;
         --all)
             JAVASCRIPT=true
             RUST=true
@@ -30,6 +33,7 @@ do
             JAVA=true
             CSHARP=true
             KOTLIN=true
+            FSHARP=true
             ;;
         --uint64)
             BIT_FLAG=--uint64
@@ -44,37 +48,44 @@ do
     esac
 done
 
-if [ $RUST ] ; then
-    echo "Compiling Rust..."
-    cd rust
-    cargo build --release
-    cd ..
-fi
+# if [ $RUST ] ; then
+#     echo "Compiling Rust..."
+#     cd rust
+#     cargo build --release
+#     cd ..
+# fi
 
-if [ $SCALA ] ; then
-    echo "Compiling Scala..."
-    cd scala
-    sbt compile
-    cd ..
-fi
+# if [ $SCALA ] ; then
+#     echo "Compiling Scala..."
+#     cd scala
+#     sbt compile
+#     cd ..
+# fi
 
-if [ $JAVA ] ; then
-    echo "Compiling Java"
-    cd java
-    rm -rf out && mkdir out
-    javac src/Main.java -d out
-    cd ..
-fi
+# if [ $JAVA ] ; then
+#     echo "Compiling Java"
+#     cd java
+#     rm -rf out && mkdir out
+#     javac src/Main.java -d out
+#     cd ..
+# fi
 
-if [ $CSHARP ] ; then
-    echo "Compiling C#"
-    cd csharp
-    dotnet build -c release
-    cd ..
-fi
+# if [ $CSHARP ] ; then
+#     echo "Compiling C#"
+#     cd csharp
+#     dotnet build -c release
+#     cd ..
+# fi
 
-echo "Compilation completed."
-echo
+# if [ $FSharp ] ; then
+#     echo "Compiling F#"
+#     cd fsharp
+#     dotnet build -c release
+#     cd ..
+# fi
+
+# echo "Compilation completed."
+# echo
 echo "| Language   | Slowest time | Average time |"
 echo "| ---------- | ------------ | ------------ |"
 if [ $JAVASCRIPT ] ; then
@@ -84,29 +95,39 @@ fi
 
 if [ $RUST ] ; then
     echo -n -e "| Rust       |"
-    rust/target/release/primes_benchmark $BIT_FLAG
+    cd rust
+    cargo run --release --quiet -- $BIT_FLAG
+    cd ..
 fi
 
 if [ $SCALA ] ; then
     echo -n -e "| Scala      |"
-    cd scala/target/scala-2.12/classes
-    java -classpath $HOME/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.12.8.jar:. Main $BIT_FLAG
-    cd ../../../..
+    cd scala
+    sbt --error 'set showSuccess := false' "run --uint64"
+    cd ..
 fi
 
 if [ $JAVA ] ; then
     echo -n -e "| Java       |"
-    cd java/out
+    cd java
+    rm -rf out && mkdir out
+    javac src/Main.java -d out
+    cd out
     java Main $BIT_FLAG
     cd ../..
 fi
 
 if [ $CSHARP ] ; then
     echo -n -e "| C#         |"
-    dotnet csharp/primes_benchmark/bin/Release/netcoreapp2.2/primes_benchmark.dll $BIT_FLAG
+    dotnet run -c release --project csharp/primes_benchmark -- $BIT_FLAG
 fi
 
 if [ $KOTLIN ] ; then
     echo -n -e "| Kotlin     |"
     kotlinc -script kotlin/primesBenchmark.kts -- $BIT_FLAG
+fi
+
+if [ $FSHARP ] ; then
+    echo -n -e "| F#         |"
+    dotnet run -c release --project fsharp/primes_benchmark -- $BIT_FLAG
 fi
